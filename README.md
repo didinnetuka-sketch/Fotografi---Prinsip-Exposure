@@ -1,0 +1,2 @@
+# Fotografi - Prinsip Exposure
+

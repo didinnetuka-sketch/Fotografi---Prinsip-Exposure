@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Petualangan Cahaya: Segitiga Exposure</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Hidden SVG filter definitions for blur, motion blur, and fractal noise -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <filter id="bgb"><feGaussianBlur id="bgbS" stdDeviation="0"/></filter>
+      <filter id="bLo"><feGaussianBlur stdDeviation="6"/></filter>
+      <filter id="bHi"><feGaussianBlur stdDeviation="0"/></filter>
+      <filter id="mb"><feGaussianBlur id="mbS" stdDeviation="0 0"/></filter>
+      <filter id="nf" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3"/>
+        <!-- Crisp monochrome grain (opaque) so high ISO adds noise without hazing/softening the background -->
+        <feColorMatrix type="matrix" values="0.75 0.75 0.75 0 -0.625  0.75 0.75 0.75 0 -0.625  0.75 0.75 0.75 0 -0.625  0 0 0 0 1"/>
+      </filter>
+      <filter id="dof-feather" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="4.5"/>
+      </filter>
+      <mask id="dof-subj-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="576">
+        <rect width="1024" height="576" fill="#000"/>
+        <g filter="url(#dof-feather)">
+          <!-- Main Subject: Girl in White Hijab & Dress -->
+          <path d="M 515 18 L 530 19 L 540 20 L 550 22 L 560 25 L 570 28 L 580 32 L 589 35 L 600 41 L 609 47 L 617 53 L 625 59 L 632 65 L 648 71 L 642 77 L 645 83 L 649 89 L 652 95 L 658 101 L 656 107 L 658 113 L 659 119 L 662 125 L 663 131 L 673 137 L 667 143 L 670 149 L 671 155 L 671 161 L 674 167 L 676 173 L 680 179 L 685 185 L 682 191 L 680 197 L 687 203 L 681 209 L 682 215 L 683 221 L 684 227 L 688 233 L 689 239 L 689 245 L 691 251 L 695 257 L 696 263 L 699 269 L 693 275 L 694 281 L 695 287 L 696 293 L 697 299 L 698 305 L 699 311 L 701 317 L 702 323 L 704 329 L 704 335 L 724 341 L 718 347 L 725 353 L 708 359 L 710 365 L 724 371 L 717 377 L 727 383 L 731 389 L 730 395 L 728 401 L 725 407 L 723 413 L 725 419 L 728 425 L 729 431 L 731 437 L 732 443 L 734 449 L 737 455 L 739 461 L 740 467 L 743 473 L 744 479 L 746 485 L 748 491 L 750 497 L 751 503 L 753 509 L 755 515 L 755 521 L 758 527 L 759 533 L 761 539 L 761 545 L 764 551 L 765 557 L 766 563 L 768 569 L 767 575 L 262 575 L 258 569 L 263 563 L 264 557 L 266 551 L 266 545 L 268 539 L 268 533 L 270 527 L 271 521 L 272 515 L 274 509 L 275 503 L 276 497 L 278 491 L 279 485 L 280 479 L 282 473 L 283 467 L 285 461 L 287 455 L 288 449 L 290 443 L 292 437 L 294 431 L 296 425 L 298 419 L 300 413 L 302 407 L 305 401 L 308 395 L 311 389 L 310 383 L 308 377 L 312 371 L 315 365 L 324 359 L 334 353 L 344 347 L 345 341 L 357 335 L 358 329 L 366 323 L 370 317 L 373 311 L 378 305 L 383 299 L 387 293 L 389 287 L 391 281 L 393 275 L 387 269 L 394 263 L 401 257 L 401 251 L 401 245 L 401 239 L 401 233 L 398 227 L 390 221 L 394 215 L 392 209 L 382 203 L 389 197 L 388 191 L 386 185 L 385 179 L 386 173 L 385 167 L 386 161 L 380 155 L 383 149 L 386 143 L 389 137 L 391 131 L 392 125 L 393 119 L 395 113 L 397 107 L 400 101 L 402 95 L 405 89 L 398 83 L 411 77 L 414 71 L 418 65 L 421 59 L 428 53 L 433 47 L 441 41 L 452 35 L 450 35 L 460 30 L 470 26 L 480 23 L 495 20 Z" fill="#fff"/>
+        </g>
+      </mask>
+      <!-- Motion-blur subject masks (pre-feathered PNGs: no runtime filter, keeps sliders smooth) -->
+      <mask id="cyclist-motion-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="571">
+        <image href="assets/images/mask-cyclist.png" width="1024" height="571"/>
+      </mask>
+      <mask id="runner-motion-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="571">
+        <image href="assets/images/mask-runner.png" width="1024" height="571"/>
+      </mask>
+      <mask id="bike-motion-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="571">
+        <image href="assets/images/mask-bike.png" width="1024" height="571"/>
+      </mask>
+    </defs>
+  </svg>
+
+  <!-- Sticky Global Header -->
+  <header>
+    <b>Petualangan Cahaya</b>
+    <button id="au" class="au-toggle" onclick="tg()" aria-label="Toggle Backsound" aria-pressed="true">
+      <span class="au-icon">🔊</span>
+      <span class="au-label">Backsound</span>
+      <span class="au-switch on">
+        <span class="sw-txt">ON</span>
+        <span class="sw-knob"></span>
+      </span>
+    </button>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="app"></main>
+
+  <!-- Petunjuk Modal Dialog -->
+  <dialog id="dlg">
+    <h3>Petunjuk Penggunaan</h3>
+    <p>Pilih modul di menu utama. Geser slider atau pilih nilai untuk melihat perubahan foto secara langsung. Tombol “Narasi” membacakan materi. Tombol Backsound di kanan atas mematikan musik latar tanpa mengganggu narasi dan efek suara.</p>
+    <button class="btn" onclick="document.getElementById('dlg').close()">Mengerti</button>
+  </dialog>
+
+  <!-- Main Application Script -->
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
